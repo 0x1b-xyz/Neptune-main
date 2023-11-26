@@ -13,11 +13,12 @@
 <script>
 import { ref, inject } from 'vue';
 import { debounce } from 'lodash';
+import "firebase/compat/firestore";
 
 export default {
   setup() {
     // Adjust the path based on your project structure
-    const { firestore } = inject('$firebase', { firestore: null });
+    const firestore = inject('$firestore', null);
 
     const searchQuery = ref('');
     const searchResults = ref([]);
@@ -33,8 +34,7 @@ export default {
       }
       const query = searchQuery.value.toLowerCase();
 
-      firestore
-        .collection('users')
+      firestore.collection('users')
         .where('name', '>=', query)
         .where('name', '<=', query + '\uf8ff')
         .get()

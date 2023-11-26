@@ -98,9 +98,9 @@ export default {
         // Convert the private key to JWK format
         const privateKeyJWK = {
           kty: 'RSA',
-          n: forge.util.encode64(parsedPrivateKey.n.toBuffer()),
-          e: forge.util.encode64(parsedPrivateKey.e.toBuffer()),
-          d: forge.util.encode64(parsedPrivateKey.d.toBuffer()),
+          n: forge.util.encode64(parsedPrivateKey.n.toString()),
+          e: forge.util.encode64(parsedPrivateKey.e.toString()),
+          d: forge.util.encode64(parsedPrivateKey.d.toString()),
         };
 
         // Store the private key as a JWK in local storage
@@ -108,6 +108,7 @@ export default {
       } catch (error) {
         console.error('Error saving private key:', error);
         // Handle the error as needed
+        throw error
       }
     };
 

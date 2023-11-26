@@ -2,9 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css';
-import { getFirestore } from 'firebase/firestore'
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDg175AidURF6LpgHYZS3J8SQPVhn8dORc",
@@ -18,11 +18,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 // Create a Firestore instance
-const firestore = getFirestore(firebaseApp);
+const firestore = firebaseApp.firestore();
 
 const vueApp = createApp(App)
 
@@ -33,5 +33,6 @@ vueApp.config.globalProperties.$firebase = {
 };
 
 vueApp.provide('auth', auth).mount('#app');
+vueApp.provide('$firestore', firestore)
 
 export default vueApp;
